@@ -18,6 +18,9 @@ class ContactsLessonTableViewController: UITableViewController {
         //let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("toggleEdit"))
         
         self.navigationItem.leftBarButtonItem = moveButton
+        
+        let addContactButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: Selector("addContact"))
+        self.navigationItem.rightBarButtonItem = addContactButton
 /*
         if tableView.editing {
         }
@@ -32,7 +35,21 @@ class ContactsLessonTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
+    func addContact() {
+        let newContact = Contact(firstName: "New", lastName: "Contact")
+        self.contacts.append(newContact)
+        let newIndexPath = NSIndexPath(forRow: self.contacts.count - 1, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+    }
+    
     func toggleEdit() {
         print(self.navigationItem.leftBarButtonItem!.title)
         print("Editing Mode" + String(tableView.editing))
